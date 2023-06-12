@@ -1,4 +1,7 @@
 import puppeteer from "puppeteer";
+import { Proxy } from "../services/proxy";
+
+const proxy = new Proxy();
 
 export class notWokeShows {
   private showsNames: string[] = [];
@@ -6,7 +9,13 @@ export class notWokeShows {
 
   async crawl() {
     try {
-      const browser = await puppeteer.launch();
+      let testProxy = "139.162.78.109:80";
+      let randomProxy = await proxy.getRandomProxyServer();
+      console.log(`[crawler@notwokeshows] using proxy: ${randomProxy}`);
+      const browser = await puppeteer.launch({
+        headless: "new",
+        args: [`--proxy-server=http://${randomProxy}`],
+      });
       const page = await browser.newPage();
 
       await page.goto("https://www.notwokeshows.com/");
@@ -23,12 +32,11 @@ export class notWokeShows {
       console.log("Movie Names:");
       console.log(this.showsNames);
       console.log("Total Movies:", this.showsAmount);
-
-      await browser.close();
     } catch (error) {
       console.log(
         `[crawler] Error trying to crawl notwokeshows.com:\n${error}`
       );
+      process.exit();
     }
   }
 }
