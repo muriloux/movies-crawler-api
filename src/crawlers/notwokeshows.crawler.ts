@@ -1,8 +1,6 @@
-import puppeteer, { ElementHandle } from "puppeteer";
-import { Proxy } from "../services/proxy";
 import { config } from "../config";
 import { delay } from "../helpers";
-const proxy = new Proxy();
+import { puppeteerInstance } from "./puppeteer";
 
 export class notWokeShows {
   private showsNames: string[] = [];
@@ -10,20 +8,11 @@ export class notWokeShows {
 
   async crawl() {
     for (let i = 0; i <= config.maxProxyAttempts; i++) {
-      let randomProxy = await proxy.getRandomProxyServer();
-      const args = config.useProxy
-        ? [`--proxy-server=http://${randomProxy}`]
-        : [];
-      const browser = await puppeteer.launch({
-        headless: config.headless,
-        args,
-      });
+      let { page, browser } = await puppeteerInstance();
 
-      const page = await browser.newPage();
       try {
-        let showsNames: string[] = [];
-
-        console.log(`[crawler@notwokeshows] trying proxy: ${randomProxy}`);
+        console.log("[crawler] starting scraping @notwokeshows.com.");
+        let showsNames = [];
 
         //navigate
 

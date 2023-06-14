@@ -1,8 +1,9 @@
 import axios from "axios";
 
 export class Proxy {
-  async getProxyList(): Promise<string[] | []> {
+  async fetchProxyList() {
     try {
+      console.log("[proxy] fetching proxy list");
       const response = await axios.get("https://api.proxyscrape.com/v2/", {
         params: {
           request: "displayproxies",
@@ -21,10 +22,14 @@ export class Proxy {
     }
   }
 
-  async getRandomProxyServer() {
-    let proxyList = await this.getProxyList();
+  async getRandomProxyServer(pxList: Promise<string[]>) {
+    let proxyList = await pxList;
+    if (proxyList.length === 0) {
+      throw Error(
+        `proxyList has 0 items, use fetchProxyList() before using getRandomProxyServer()`
+      );
+    }
     let random = Math.floor(Math.random() * proxyList.length);
-    let randomProxy = proxyList[random];
-    return randomProxy;
+    return proxyList[random];
   }
 }
