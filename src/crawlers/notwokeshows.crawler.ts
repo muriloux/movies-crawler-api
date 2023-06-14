@@ -9,7 +9,7 @@ export class notWokeShows {
   private showsAmount: number | null = null;
 
   async crawl() {
-    for (let i = 0; i < config.maxProxyAttempts; i++) {
+    for (let i = 0; i <= config.maxProxyAttempts; i++) {
       let randomProxy = await proxy.getRandomProxyServer();
       const args = config.useProxy
         ? [`--proxy-server=http://${randomProxy}`]
