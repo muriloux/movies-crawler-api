@@ -17,8 +17,10 @@ export class notWokeShows implements Crawler {
       await page.goto('https://www.notwokeshows.com/');
 
       const movieNames: Set<string> = new Set(); // Use a Set instead of an array
+      let currentPage = 1;
 
       while (true) {
+
 
         // Close modal
         await page.waitForSelector("#dmPopup");
@@ -28,6 +30,12 @@ export class notWokeShows implements Crawler {
         // Wait for the movie names to load
         await page.waitForSelector('.business-directory__item-name');
 
+        // Extract pages amount
+        const pagesAmount = await page.$eval('ul.business-directory__pagination li:last-child a', (el) => {
+          return el.textContent as string;
+        });
+
+
         // Extract movie names on the current page
         const namesOnPage = await page.$$eval('div.business-directory__item-name', (elements: HTMLDivElement[]) => {
           return elements.map((el) => (el.textContent as string).trim())
@@ -35,7 +43,7 @@ export class notWokeShows implements Crawler {
 
         namesOnPage.forEach((name) => movieNames.add(name));
         console.clear()
-        console.log(`[crawler] @nws: ${movieNames.size} movies`)
+        console.log(`[crawler] (${currentPage}/${pagesAmount}) @nws: ${movieNames.size} movies`)
 
         // Check if there's a next page
         const nextPageLink = await page.$('.business-directory__pagination .active + li a');
@@ -49,6 +57,7 @@ export class notWokeShows implements Crawler {
 
         // Wait for the page to load
         await page.waitForSelector('.business-directory__item-name');
+        currentPage++;
       }
 
       await browser.close();
