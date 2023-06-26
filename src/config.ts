@@ -1,7 +1,7 @@
 import { Iconfig } from "./types";
 
 export const config: Iconfig = {
-  useProxy: true,
-  maxProxyAttempts: 20,
+  useProxy: false,
+  maxAttempts: 20,
   headless: false,
 };

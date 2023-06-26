@@ -1,70 +1,80 @@
-import { config } from "../config";
 import { delay } from "../helpers";
+import { Proxy } from "../services/proxy";
+import { Crawler } from "../types";
 import { puppeteerInstance } from "./puppeteer";
 
-export class notWokeShows {
-  private showsNames: string[] = [];
-  private showsAmount: number | null = null;
+const proxy = new Proxy();
+export class notWokeShows implements Crawler {
+  showsNames: string[] = [];
+  showsAmount: number | null = null;
 
   async crawl() {
-    for (let i = 0; i <= config.maxProxyAttempts; i++) {
-      let { page, browser } = await puppeteerInstance();
 
-      try {
-        console.log("[crawler] starting scraping @notwokeshows.com.");
-        let showsNames = [];
 
-        //navigate
+    return await proxy.useProxy(async () => {
+      const { browser, page } = await puppeteerInstance()
+      console.log('[crawler] @nws started');
+      await page.goto('https://www.notwokeshows.com/');
 
-        await page.goto("https://www.notwokeshows.com/");
+      const movieNames: Set<string> = new Set(); // Use a Set instead of an array
 
-        //close  modal
+      while (true) {
 
+        // Close modal
         await page.waitForSelector("#dmPopup");
         await delay(2000);
         await page.keyboard.press("Escape");
 
-        //pagination
-        await page.waitForSelector(".business-directory__list");
-        await page.waitForSelector(".business-directory__pagination");
+        // Wait for the movie names to load
+        await page.waitForSelector('.business-directory__item-name');
 
-        const showPageNumbers = await page.$$(
-          ".business-directory__pagination li"
-        );
+        // Extract movie names on the current page
+        const namesOnPage = await page.$$eval('div.business-directory__item-name', (elements: HTMLDivElement[]) => {
+          return elements.map((el) => (el.textContent as string).trim())
+        });
 
-        for (let i = 0; i <= showPageNumbers.length - 1; i++) {
-          await page.waitForSelector(".business-directory__pagination");
-          let numbers = await page.$$(".business-directory__pagination li");
+        namesOnPage.forEach((name) => movieNames.add(name));
+        console.clear()
+        console.log(`[crawler] @nws: ${movieNames.size} movies`)
 
-          await numbers[i].click();
-          await delay(2000);
-
-          //Get Shows By Page
-          showsNames = await page.$$eval(
-            ".business-directory__item-name a",
-            (anchors) =>
-              anchors.map((anchor) => (anchor.textContent as string).trim())
-          );
-
-          if (showsNames.length === 0) {
-            throw new Error("Got empty shows array.");
-          }
-          showsNames.forEach((s) => {
-            this.showsNames.push(s);
-          });
+        // Check if there's a next page
+        const nextPageLink = await page.$('.business-directory__pagination .active + li a');
+        if (!nextPageLink) {
+          break;
         }
 
-        this.showsAmount = this.showsNames.length;
-        console.log("Movie Names:");
-        console.log(this.showsNames);
-        console.log("Total Movies:", this.showsAmount);
-        break;
-      } catch (error) {
-        console.log(
-          `[crawler] Error trying to crawl notwokeshows.com:\n${error}`
-        );
-        browser.close();
+        // Navigate to the next page
+        await nextPageLink.click();
+        await delay(2000);
+
+        // Wait for the page to load
+        await page.waitForSelector('.business-directory__item-name');
       }
+
+      await browser.close();
+
+      this.showsAmount = movieNames.size;
+      this.showsNames = [...movieNames];
+
+      console.log('[crawler] @nws done');
+
+      return movieNames;
+    });
+  }
+
+  getShowsNames(): string[] {
+    if (this.showsNames.length === 0) {
+      console.log('No shows found. use .crawl().then(() => shows.getShowsNames()) to get them');
+      return [];
     }
+    return this.showsNames
+  }
+
+  getShowsAmount(): number | null {
+    if (this.showsAmount === null) {
+      console.log('No shows found. use .crawl().then(() => shows.getShowsAmount()) to get them');
+      return null;
+    }
+    return this.showsAmount
   }
 }
