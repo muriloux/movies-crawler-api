@@ -1,7 +1,7 @@
 import { delay } from "../helpers";
 import { Proxy } from "../services/proxy";
 import { Crawler } from "../types";
-import { puppeteerInstance } from "./puppeteer";
+import { puppeteerInstance } from "../puppeteer/initPuppeteer";
 
 const proxy = new Proxy();
 export class notWokeShows implements Crawler {
@@ -9,8 +9,6 @@ export class notWokeShows implements Crawler {
   showsAmount: number | null = null;
 
   async crawl() {
-
-
     return await proxy.useProxy(async () => {
       const { browser, page } = await puppeteerInstance()
       console.log('[crawler] @nws started');

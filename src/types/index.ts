@@ -1,7 +1,8 @@
 export interface Iconfig {
   useProxy: boolean;
   maxAttempts: number;
-  headless: "new" | false;
+  headless: boolean | "new";
+  crawlIntervalMinutes: number;
 }
 
 export type Crawler = {

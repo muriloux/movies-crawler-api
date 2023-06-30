@@ -1,5 +1,5 @@
 import axios from "axios";
-import { config } from "../config";
+import { config } from "../config/config";
 export class Proxy {
   async fetchProxyList() {
     if (config.useProxy) {
