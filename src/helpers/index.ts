@@ -5,7 +5,6 @@ export function delay(ms: number): Promise<void> {
 }
 
 export function saveSetAsJson(moviesSet: Set<string>, filename: string) {
-  console.log(`[file saver] saving`);
   return new Promise((resolve, reject) => {
     try {
       let names = moviesSet as Set<string>;
@@ -17,6 +16,9 @@ export function saveSetAsJson(moviesSet: Set<string>, filename: string) {
       );
       resolve(true);
     } catch (error) {
+      console.log(
+        `[file saver] error saving src/data/${filename}.json:\n${error}`
+      );
       reject(error as Error);
     }
   });
