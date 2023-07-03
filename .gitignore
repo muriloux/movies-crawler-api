@@ -1,5 +1,5 @@
 node_modules
 dist
-data/*.json
+src/data/*.json
 src/crawlers/test.ts
 page.html
