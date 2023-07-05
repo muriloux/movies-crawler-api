@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node --transpile-only src/index.ts",
+    "server:dev": "ts-node --transpile-only src/api/server.ts",
     "proxy:dev": "ts-node --transpile-only src/crawlers/proxy.ts",
     "build": "tsc",
     "start": "node dist/index.js"
@@ -15,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^1.4.0",
+    "fastify": "^4.19.2",
     "node-cron": "^3.0.2",
     "puppeteer": "^20.5.0",
     "typescript": "^5.1.3"
