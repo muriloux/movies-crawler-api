@@ -5,6 +5,9 @@ import { delay } from "../helpers";
 
 const proxy = new Proxy();
 export class worthItOrWoke implements Crawler {
+  name: string = "Worth it or Woke";
+  alias: string = "wiow";
+  url: string = "https://worthitorwoke.com/category/";
   showsNames: string[] = [];
   showsAmount: number | null = null;
 

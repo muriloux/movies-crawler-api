@@ -1,18 +1,24 @@
 import fastify from "fastify";
+import { notWokeShows } from "../crawlers";
+import { worthItOrWoke } from "../crawlers/worthitorwoke.crawler";
+import routes from "./routes";
 
-const server = fastify();
+export function startServer(curators: {
+  nws: notWokeShows;
+  wiow: worthItOrWoke;
+}) {
+  const server = fastify();
 
-server.get("/", async (req, res) => {
-  return "Success";
-});
+  routes(server);
 
-server.listen(
-  {
-    port: 3000,
-  },
-  (err, address) => {
-    err
-      ? console.log(`Error: ${err}`)
-      : console.log(`Server listening on ${address}`);
-  }
-);
+  server.listen(
+    {
+      port: 3333,
+    },
+    (err, address) => {
+      err
+        ? console.log(`[server] Error: ${err}`)
+        : console.log(`[server] listening on ${address}`);
+    }
+  );
+}
