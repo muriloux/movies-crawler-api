@@ -1,5 +1,5 @@
 import axios from "axios";
-import { config } from "../config/config";
+import { config } from "../../config/config";
 export class Proxy {
   async fetchProxyList() {
     if (config.useProxy) {
@@ -24,11 +24,9 @@ export class Proxy {
     } else {
       return [];
     }
-
   }
 
   async getRandomProxyServer(pxList: Promise<string[]>) {
-
     let proxyList = await pxList;
     try {
       if (proxyList.length === 0) {
@@ -38,9 +36,8 @@ export class Proxy {
       }
       let random = Math.floor(Math.random() * proxyList.length);
       return proxyList[random];
-
     } catch (error) {
-      console.log(`[proxy] ${error}`)
+      console.log(`[proxy] ${error}`);
     }
   }
 
@@ -55,7 +52,8 @@ export class Proxy {
         } catch (error) {
           if (i === config.maxAttempts) {
             throw new Error(
-              `[proxy] ${error}, max attempts reached, aborting...`)
+              `[proxy] ${error}, max attempts reached, aborting...`
+            );
           }
           console.log(`[proxy] ${error}, retrying...`);
           continue;

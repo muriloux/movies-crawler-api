@@ -1,11 +1,11 @@
 import { startServer } from "./api/server";
-import { notWokeShows } from "./crawlers";
-import { worthItOrWoke } from "./crawlers/worthitorwoke.crawler";
-import { saveSetAsJson } from "./helpers";
-import { startCronJobs } from "./schedules";
+import { NotWokeShows } from "./crawlers/notwokeshows.crawler";
+import { WorthItOrWoke } from "./crawlers/worthitorwoke.crawler";
+import { saveSetAsJson } from "./shared/helpers";
+import { startCronJobs } from "./shared/schedules";
 
-export const nws = new notWokeShows();
-export const wiow = new worthItOrWoke();
+export const nws = new NotWokeShows();
+export const wiow = new WorthItOrWoke();
 
 async function crawlAll() {
   const nwsMovies = await nws.crawl();

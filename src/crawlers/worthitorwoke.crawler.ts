@@ -1,10 +1,10 @@
-import { Crawler } from "../types";
-import { puppeteerInstance } from "../puppeteer/initPuppeteer";
-import { Proxy } from "../services/proxy";
-import { delay } from "../helpers";
+import { Crawler } from "../shared/types";
+import { puppeteerInstance } from "../shared/puppeteer/initPuppeteer";
+import { Proxy } from "../shared/services/proxy";
+import { delay } from "../shared/helpers/";
 
 const proxy = new Proxy();
-export class worthItOrWoke implements Crawler {
+export class WorthItOrWoke implements Crawler {
   name: string = "Worth it or Woke";
   alias: string = "wiow";
   url: string = "https://worthitorwoke.com/category/";

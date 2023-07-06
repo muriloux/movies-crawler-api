@@ -1,4 +1,4 @@
-import { Iconfig } from "../types";
+import { Iconfig } from "../shared/types";
 
 export const config: Iconfig = {
   useProxy: false,

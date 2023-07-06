@@ -1,3 +1,5 @@
-import { notWokeShows } from "./notwokeshows.crawler";
+import { NotWokeShows } from "./notwokeshows.crawler";
+import { WorthItOrWoke } from "./worthitorwoke.crawler";
+import { Imdb } from "./imdb.crawler";
 
-export { notWokeShows };
+export { NotWokeShows, WorthItOrWoke, Imdb };
