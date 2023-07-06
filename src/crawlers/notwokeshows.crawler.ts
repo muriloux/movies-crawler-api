@@ -5,6 +5,9 @@ import { puppeteerInstance } from "../puppeteer/initPuppeteer";
 
 const proxy = new Proxy();
 export class notWokeShows implements Crawler {
+  name: string = "Not Woke Shows";
+  alias: string = "nws";
+  url: string = "https://www.notwokeshows.com/";
   showsNames: string[] = [];
   showsAmount: number | null = null;
 
