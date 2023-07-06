@@ -1,6 +1,6 @@
 import puppeteer, { Browser, Page } from "puppeteer";
 import { Proxy } from "../services/proxy";
-import { config } from "../config/config";
+import { config } from "../../config/config";
 
 const proxy = new Proxy();
 

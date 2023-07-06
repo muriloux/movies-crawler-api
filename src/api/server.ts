@@ -1,11 +1,11 @@
 import fastify from "fastify";
-import { notWokeShows } from "../crawlers";
-import { worthItOrWoke } from "../crawlers/worthitorwoke.crawler";
+import { NotWokeShows } from "../crawlers/notwokeshows.crawler";
+import { WorthItOrWoke } from "../crawlers/worthitorwoke.crawler";
 import routes from "./routes";
 
 export function startServer(curators: {
-  nws: notWokeShows;
-  wiow: worthItOrWoke;
+  nws: NotWokeShows;
+  wiow: WorthItOrWoke;
 }) {
   const server = fastify();
 

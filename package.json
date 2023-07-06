@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node --transpile-only src/index.ts",
+    "dev:watch": "nodemon --exec ts-node src/index.ts",
     "server:dev": "ts-node --transpile-only src/api/server.ts",
     "proxy:dev": "ts-node --transpile-only src/crawlers/proxy.ts",
     "build": "tsc",
@@ -23,6 +24,7 @@
   },
   "devDependencies": {
     "@types/node-cron": "^3.0.8",
+    "nodemon": "^2.0.22",
     "prisma": "^4.16.2",
     "ts-node": "^10.9.1"
   }
