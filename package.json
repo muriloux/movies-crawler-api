@@ -9,6 +9,8 @@
     "dev:watch": "nodemon --exec ts-node src/index.ts",
     "server:dev": "ts-node --transpile-only src/api/server.ts",
     "proxy:dev": "ts-node --transpile-only src/crawlers/proxy.ts",
+    "migrate": "npx prisma migrate dev init",
+    "seed": "ts-node --transpile-only prisma/db/seed.ts",
     "build": "tsc",
     "start": "node dist/index.js"
   },
@@ -16,6 +18,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "^4.16.2",
     "axios": "^1.4.0",
     "fastify": "^4.19.2",
     "node-cron": "^3.0.2",

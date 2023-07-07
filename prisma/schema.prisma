@@ -16,12 +16,9 @@ model Curator {
   alias       String   @unique
   url         String   @unique
   totalMovies Int
-  movies  Movie[]
 }
 
 model Movie {
   id          Int      @id @default(autoincrement())
-  title       String   @unique
-  curatorId   Int
-  curator     Curator  @relation(fields: [curatorId], references: [id])
+  title       String   
 }
