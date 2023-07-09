@@ -1,7 +1,8 @@
 import fastify from "fastify";
+
 import { NotWokeShows } from "../crawlers/notwokeshows.crawler";
 import { WorthItOrWoke } from "../crawlers/worthitorwoke.crawler";
-import routes from "./routes";
+import { routes } from "./routes/index";
 
 export function startServer(curators: {
   nws: NotWokeShows;

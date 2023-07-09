@@ -1,9 +1,7 @@
 import { FastifyInstance } from "fastify";
-import { curatorsController } from "../controllers/curatorsController";
+import curatorsRoutes from "../modules/curators/routes/curators.routes";
 
-export default function routes(server: FastifyInstance) {
-  server.get("/", (req, res) => {
-    res.status(200).send("Success");
-  });
-  server.get("/curators", curatorsController);
-}
+export const routes = (server: FastifyInstance) => {
+  server.get("/", (req, res) => res.status(200).send("Success"));
+  curatorsRoutes(server);
+};
