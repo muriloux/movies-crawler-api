@@ -12,7 +12,7 @@ datasource db {
 
 model Curator {
   id          Int      @id @default(autoincrement())
-  name        String
+  name        String   @unique
   alias       String   @unique
   url         String   @unique
   totalMovies Int
