@@ -6,9 +6,9 @@ export interface Iconfig {
 }
 
 export type Crawler = {
-  showsNames: string[];
+  shows: string[];
   showsAmount: number | null;
-  crawl: () => Promise<Set<string> | undefined>
-  getShowsNames: () => string[];
+  crawl: () => Promise<Set<string> | undefined>;
+  getShows: () => string[];
   getShowsAmount: () => number | null;
 };

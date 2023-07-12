@@ -8,9 +8,9 @@ interface IMovie {
 export class ListMoviesService {
   async execute() {
     const movieRepository = new MovieRepository();
-    const moviesData: IMovie[] = await movieRepository.findMany();
+    const moviesData: IMovie[] = await movieRepository.findAll();
     var movies: string[] = [];
-    for (const movie of moviesData) {
+    for (let movie of moviesData) {
       movies.push(movie.title);
     }
 

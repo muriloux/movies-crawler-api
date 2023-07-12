@@ -8,7 +8,7 @@ export class NotWokeShows implements Crawler {
   name: string = "Not Woke Shows";
   alias: string = "nws";
   url: string = "https://www.notwokeshows.com/";
-  showsNames: string[] = [];
+  shows: string[] = [];
   showsAmount: number | null = null;
 
   async crawl() {
@@ -95,7 +95,7 @@ export class NotWokeShows implements Crawler {
       await browser.close();
 
       this.showsAmount = movieNames.size;
-      this.showsNames = [...movieNames];
+      this.shows = [...movieNames];
 
       console.log("[crawler] @nws done");
 
@@ -103,14 +103,14 @@ export class NotWokeShows implements Crawler {
     });
   }
 
-  getShowsNames(): string[] {
-    if (this.showsNames.length === 0) {
+  getShows(): string[] {
+    if (this.shows.length === 0) {
       console.log(
         "No shows found. use .crawl().then(() => shows.getShowsNames()) to get them"
       );
       return [];
     }
-    return this.showsNames;
+    return this.shows;
   }
 
   getShowsAmount(): number | null {

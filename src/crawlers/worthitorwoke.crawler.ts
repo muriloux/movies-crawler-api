@@ -8,7 +8,7 @@ export class WorthItOrWoke implements Crawler {
   name: string = "Worth it or Woke";
   alias: string = "wiow";
   url: string = "https://worthitorwoke.com/category/";
-  showsNames: string[] = [];
+  shows: string[] = [];
   showsAmount: number | null = null;
 
   async crawl() {
@@ -43,19 +43,19 @@ export class WorthItOrWoke implements Crawler {
       await browser.close();
 
       this.showsAmount = movieNames.size;
-      this.showsNames = [...movieNames];
+      this.shows = [...movieNames];
 
       return movieNames;
     });
   }
-  getShowsNames() {
-    if (this.showsNames.length === 0) {
+  getShows() {
+    if (this.shows.length === 0) {
       console.log(
         "No shows found. use .crawl().then(() => shows.getShowsNames()) to get them"
       );
       return [];
     }
-    return this.showsNames;
+    return this.shows;
   }
   getShowsAmount() {
     if (this.showsAmount === null) {

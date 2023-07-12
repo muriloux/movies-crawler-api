@@ -14,6 +14,9 @@ CREATE TABLE "Movie" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Curator_name_key" ON "Curator"("name");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Curator_alias_key" ON "Curator"("alias");
 
 -- CreateIndex
