@@ -12,7 +12,7 @@ export const moviesRoutes: FastifyPluginCallback = (
 ) => {
   server.route({
     method: "GET",
-    url: "/movie",
+    url: "/movies",
     handler: moviesController.index,
   });
 
