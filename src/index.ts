@@ -2,9 +2,12 @@ import { NotWokeShows } from "./crawlers/notwokeshows.crawler";
 import { WorthItOrWoke } from "./crawlers/worthitorwoke.crawler";
 import { saveSetAsJson } from "./shared/helpers";
 import "dotenv/config";
+import { ApiService } from "./shared/services/api";
 
 export const nws = new NotWokeShows();
 export const wiow = new WorthItOrWoke();
+
+const apiService = new ApiService();
 
 async function crawlAll() {
   const nwsMovies = await nws.crawl();
@@ -15,7 +18,9 @@ async function crawlAll() {
 }
 
 async function main() {
-  crawlAll();
+  //crawlAll();
+  const movies = await apiService.getMovies();
+  console.log(movies);
   console.log("[crawlers] done");
 }
 
