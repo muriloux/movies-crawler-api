@@ -1,6 +1,7 @@
 import { NotWokeShows } from "./crawlers/notwokeshows.crawler";
 import { WorthItOrWoke } from "./crawlers/worthitorwoke.crawler";
 import { saveSetAsJson } from "./shared/helpers";
+import "dotenv/config";
 
 export const nws = new NotWokeShows();
 export const wiow = new WorthItOrWoke();
