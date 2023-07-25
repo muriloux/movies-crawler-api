@@ -1,6 +1,6 @@
 import axios from "axios";
 import { config } from "../../config/config";
-export class Proxy {
+export class ProxyService {
   async fetchProxyList() {
     if (config.useProxy) {
       try {

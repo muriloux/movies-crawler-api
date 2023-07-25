@@ -1,9 +1,9 @@
 import { Crawler } from "../shared/types";
 import { puppeteerInstance } from "../shared/puppeteer/initPuppeteer";
-import { Proxy } from "../shared/services/proxy";
+import { ProxyService } from "../shared/services/proxy";
 import { delay } from "../shared/helpers/";
 
-const proxy = new Proxy();
+const proxy = new ProxyService();
 export class NotWokeShows implements Crawler {
   name: string = "Not Woke Shows";
   alias: string = "nws";
