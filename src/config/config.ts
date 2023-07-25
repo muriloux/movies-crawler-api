@@ -3,6 +3,6 @@ import { Iconfig } from "../shared/types";
 export const config: Iconfig = {
   useProxy: false,
   maxAttempts: 20,
-  headless: false,
+  headless: "new",
   crawlIntervalMinutes: 20,
 };

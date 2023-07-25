@@ -12,3 +12,8 @@ export type Crawler = {
   getShows: () => string[];
   getShowsAmount: () => number | null;
 };
+
+export interface Movie {
+  title: string;
+  curatorName: string;
+}

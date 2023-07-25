@@ -1,8 +1,8 @@
 import puppeteer, { Browser, Page } from "puppeteer";
-import { Proxy } from "../services/proxy";
+import { ProxyService } from "../services/proxy";
 import { config } from "../../config/config";
 
-const proxy = new Proxy();
+const proxy = new ProxyService();
 
 const proxyList = proxy.fetchProxyList();
 
