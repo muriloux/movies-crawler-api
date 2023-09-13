@@ -1,6 +1,16 @@
+#Node Modules
 node_modules
+
+#Build Files
 dist
+
+#Generated Data
 !data
 src/data/*.json
+
+#Junk Testing Files
 src/crawlers/test.ts
 page.html
+
+#Environment Variables
+.env
