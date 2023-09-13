@@ -14,6 +14,9 @@ export async function puppeteerInstance(): Promise<{
   const args = config.useProxy ? [`--proxy-server=http://${randomProxy}`] : [];
   const browser = await puppeteer.launch({
     headless: config.headless,
+    executablePath: config.customChromiumExecutable
+      ? process.env.CUSTOM_CHROMIUM_PATH
+      : undefined,
     args,
   });
 

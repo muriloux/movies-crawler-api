@@ -3,6 +3,7 @@ export interface Iconfig {
   maxAttempts: number;
   headless: boolean | "new";
   crawlIntervalMinutes: number;
+  customChromiumExecutable: boolean;
 }
 
 export type Crawler = {

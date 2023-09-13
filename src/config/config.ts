@@ -5,4 +5,5 @@ export const config: Iconfig = {
   maxAttempts: 20,
   headless: false,
   crawlIntervalMinutes: 20,
+  customChromiumExecutable: false,
 };
