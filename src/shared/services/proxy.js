@@ -1,5 +1,5 @@
 import axios from "axios";
-import { config } from "../../config/config";
+import { config } from "../../config/config.js";
 
 export class ProxyService {
   async fetchProxyList() {
@@ -16,7 +16,7 @@ export class ProxyService {
             anonymity: "anonymous",
           },
         });
-        const proxyList: string[] = response.data.split("\r\n");
+        const proxyList = response.data.split("\r\n");
         return proxyList;
       } catch (error) {
         console.error("Error fetching new proxy list:", error);
@@ -27,7 +27,7 @@ export class ProxyService {
     }
   }
 
-  async getRandomProxyServer(pxList: Promise<string[]>) {
+  async getRandomProxyServer(pxList) {
     let proxyList = await pxList;
     try {
       if (proxyList.length === 0) {
@@ -42,11 +42,11 @@ export class ProxyService {
     }
   }
 
-  async useProxy(callback: Function) {
+  async useProxy(callback) {
     if (config.useProxy) {
       for (let i = 0; i <= config.maxAttempts; i++) {
         try {
-          let result: Set<string> = await callback();
+          let result = await callback();
           if (result) {
             return result;
           }
@@ -62,7 +62,7 @@ export class ProxyService {
       }
     } else {
       console.log("[proxy] not using proxy");
-      let result: Set<string> = await callback();
+      let result = await callback();
       return result;
     }
   }

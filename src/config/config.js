@@ -1,9 +1,7 @@
-import { Iconfig } from "../shared/types";
-
-export const config: Iconfig = {
+export const config = {
   useProxy: false,
   maxAttempts: 20,
-  headless: false,
+  headless: "new",
   crawlIntervalMinutes: 20,
   customChromiumExecutable: false,
 };

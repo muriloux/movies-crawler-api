@@ -1,15 +1,14 @@
-import { Crawler } from "../shared/types";
-import { puppeteerInstance } from "../shared/puppeteer/initPuppeteer";
-import { ProxyService } from "../shared/services/proxy";
-import { delay } from "../shared/helpers/";
+import { puppeteerInstance } from "../shared/puppeteer/initPuppeteer.js";
+import { ProxyService } from "../shared/services/proxy.js";
+import { delay } from "../shared/helpers/index.js";
 
 const proxy = new ProxyService();
-export class NotWokeShows implements Crawler {
-  name: string = "Not Woke Shows";
-  alias: string = "nws";
-  url: string = "https://www.notwokeshows.com/";
-  shows: string[] = [];
-  showsAmount: number | null = null;
+export class NotWokeShows {
+  name = "Not Woke Shows";
+  alias = "nws";
+  url = "https://www.notwokeshows.com/";
+  shows = [];
+  showsAmount = null;
 
   async crawl() {
     return await proxy.useProxy(async () => {
@@ -30,7 +29,7 @@ export class NotWokeShows implements Crawler {
         document.addEventListener("scroll", scrollEventTrue);
       });
 
-      const movieNames: Set<string> = new Set(); // Use a Set instead of an array
+      const movieNames = new Set(); // Use a Set instead of an array
       let currentPage = 1;
 
       while (true) {
@@ -46,15 +45,15 @@ export class NotWokeShows implements Crawler {
         const pagesAmount = await page.$eval(
           "ul.business-directory__pagination li:last-child a",
           (el) => {
-            return el.textContent as string;
+            return el.textContent;
           }
         );
 
         // Extract movie names on the current page
         const namesOnPage = await page.$$eval(
           "div.business-directory__item-name",
-          (elements: HTMLDivElement[]) => {
-            return elements.map((el) => (el.textContent as string).trim());
+          (elements) => {
+            return elements.map((el) => el.textContent.trim());
           }
         );
 
@@ -103,7 +102,7 @@ export class NotWokeShows implements Crawler {
     });
   }
 
-  getShows(): string[] {
+  getShows() {
     if (this.shows.length === 0) {
       console.log(
         "No shows found. use .crawl().then(() => shows.getShowsNames()) to get them"
@@ -113,7 +112,7 @@ export class NotWokeShows implements Crawler {
     return this.shows;
   }
 
-  getShowsAmount(): number | null {
+  getShowsAmount() {
     if (this.showsAmount === null) {
       console.log(
         "No shows found. use .crawl().then(() => shows.getShowsAmount()) to get them"

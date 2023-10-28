@@ -1,17 +1,16 @@
 import puppeteer from "puppeteer";
-import { Crawler } from "../shared/types";
-import { puppeteerInstance } from "../shared/puppeteer/initPuppeteer";
-import { ProxyService } from "../shared/services/proxy";
+import { puppeteerInstance } from "../shared/puppeteer/initPuppeteer.js";
+import { ProxyService } from "../shared/services/proxy.js";
 
 const proxy = new ProxyService();
-export class Imdb implements Crawler {
-  name: string = "";
-  alias: string = "";
-  url: string = "";
-  shows: string[] = [];
-  showsAmount: number | null = null;
+export class Imdb {
+  name = "";
+  alias = "";
+  url = "";
+  shows = [];
+  showsAmount = null;
 
-  constructor(url: string) {
+  constructor(url) {
     this.url = url;
     const listName = url.match(/ls(\d+)/);
     if (listName) {
@@ -25,7 +24,7 @@ export class Imdb implements Crawler {
       const { browser, page } = await puppeteerInstance();
       console.log(`[crawler] @imdb/${this.alias} started`);
 
-      const movieNames = new Set<string>();
+      const movieNames = new Set();
 
       try {
         await page.goto(this.url);
@@ -41,7 +40,7 @@ export class Imdb implements Crawler {
             const movieName = await movieElement.evaluate(
               (element) => element.textContent
             );
-            movieNames.add(movieName as string);
+            movieNames.add(movieName);
           }
 
           await page.evaluate(() => {
@@ -49,9 +48,7 @@ export class Imdb implements Crawler {
           });
 
           hasNextPage = await page.evaluate(() => {
-            const nextPageButton = document.querySelector(
-              ".lister-page-next"
-            ) as HTMLAnchorElement;
+            const nextPageButton = document.querySelector(".lister-page-next");
             if (nextPageButton) {
               nextPageButton.click();
               return true;

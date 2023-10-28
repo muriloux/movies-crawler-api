@@ -1,15 +1,14 @@
-import { Crawler } from "../shared/types";
-import { puppeteerInstance } from "../shared/puppeteer/initPuppeteer";
-import { ProxyService } from "../shared/services/proxy";
-import { delay } from "../shared/helpers/";
+import { puppeteerInstance } from "../shared/puppeteer/initPuppeteer.js";
+import { ProxyService } from "../shared/services/proxy.js";
+import { delay } from "../shared/helpers/index.js";
 
 const proxy = new ProxyService();
-export class WorthItOrWoke implements Crawler {
-  name: string = "Worth it or Woke";
-  alias: string = "wiow";
-  url: string = "https://worthitorwoke.com/category/";
-  shows: string[] = [];
-  showsAmount: number | null = null;
+export class WorthItOrWoke {
+  name = "Worth it or Woke";
+  alias = "wiow";
+  url = "https://worthitorwoke.com/category/";
+  shows = [];
+  showsAmount = null;
 
   async crawl() {
     return await proxy.useProxy(async () => {
@@ -17,7 +16,7 @@ export class WorthItOrWoke implements Crawler {
 
       await page.goto("https://worthitorwoke.com/category/recommend/");
 
-      const movieNames = new Set<string>();
+      const movieNames = new Set();
 
       while (true) {
         const movieElements = await page.$$("h2.bt_bb_headline_tag a");
@@ -26,7 +25,7 @@ export class WorthItOrWoke implements Crawler {
             (el) => el.textContent,
             element
           );
-          movieNames.add(movieName as string);
+          movieNames.add(movieName);
         }
 
         console.log(`[crawler] @wiow: ${movieNames.size} movies`);
